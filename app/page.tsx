@@ -1,125 +1,32 @@
-// 'use client';
+import React from 'react';
 
-// import {
-// 	QueryClient,
-// 	QueryClientProvider,
-// 	useQuery,
-// } from '@tanstack/react-query';
+const page = () => {
+	const [pokemon, setPokemon] = useState([]);
 
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+	function findPokemon(url) {
+		fetch(url)
+		.then(response => response.json())
+		.then(pokemon => setPokemon(pokemon))
+		.catch(error => console.log(error));
+	}
+	
+	useEffect(() => {
+		findPokemon();
+	}, []);
+	console.log(pokemon);
 
-// const queryClient = new QueryClient();
-// const isReactQueryDevToolEnabled: boolean = true;
-// export default function App() {
-// 	return (
-// 		<QueryClientProvider client={queryClient}>
-// 			<Example />
-// 			{isReactQueryDevToolEnabled && (
-// 				<ReactQueryDevtools initialIsOpen={true} />
-// 			)}
-// 		</QueryClientProvider>
-// 	);
-// }
-
-// function Example() {
-// 	const { isLoading, error, data } = useQuery({
-// 		queryKey: [''],
-// 		queryFn: () =>
-// 			fetch(
-// 				// 'https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=o6GAkUgopwiunWCT'
-// 				'https://api.github.com/repos/tannerlinsley/react-query'
-// 			).then(res => res.json()),
-// 	});
-
-// 	if (isLoading) return 'Loading...';
-// 	//@ts-ignore
-// 	if (error) return 'An error has occurred: ' + error.message;
-
-// 	return (
-// 		<div>
-// 			{/* <p>{data.count}</p>
-// 			<p>{data.limit}</p> */}
-// 			<h1>nom{data.name}</h1>
-// 			<p>description{data.description}</p>
-// 			<strong>👀 {data.subscribers_count}</strong>
-// 			<strong>✨ {data.stargazers_count}</strong>
-// 			<strong>🍴 {data.forks_count}</strong>
-// 		</div>
-// 	);
-// }
-// 'use client';
-// import {
-// 	QueryClient,
-// 	QueryClientProvider,
-// 	useQuery,
-// } from '@tanstack/react-query';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-// const queryClient = new QueryClient();
-// const api_key = 'o6GAkUgopwiunWCT';
-
-// export default function App() {
-// 	return (
-// 		<QueryClientProvider client={queryClient}>
-// 			<Example />
-// 			<ReactQueryDevtools initialIsOpen={true} />
-// 		</QueryClientProvider>
-// 	);
-// }
-
-// function Example() {
-// 	const { isLoading, error, data } = useQuery({
-// 		queryKey: ['data'],
-// 		queryFn: () =>
-// 			fetch(
-// 				// 'https://api.github.com/repos/tannerlinsley/react-query'
-// 				'https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=o6GAkUgopwiunWCT',
-// 				{
-// 					method: 'GET',
-// 					credentials: 'include',
-// 				}
-// 			).then(res => res.json()),
-// 	});
-
-// 	if (isLoading) return 'Loading...';
-// 	//@ts-ignore
-// 	if (error) return 'An error has occurred: ' + error.message;
-
-// 	return (
-// 		<div>
-// 			<h1>{data.name}</h1>
-// 			<p>{data.description}</p>
-// 			<strong>👀 {data.subscribers_count}</strong>{' '}
-// 			<strong>✨ {data.stargazers_count}</strong>{' '}
-// 			<strong>🍴 {data.forks_count}</strong>
-// 		</div>
-// 	);
-// }
-// 'https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=o6GAkUgopwiunWCT'
-export const getStaticProps = async () => {
-	const res = await fetch('https://jsonplaceholder.typicode.com/users');
-	const data = await res.json();
-
-	return {
-		props: { ninjas: data },
-	};
-};
-// @ts-ignore
-const Home = ({ ninjas }) => {
-	console.log(ninjas);
+	function handleClick(plantName) {
+		alert(`Vous voulez acheter 1 ${plantName}? Très bon choix 🌱✨`)
+	}
 
 	return (
-		<div>
-			<h1>Ninjas</h1>
-			{
-				//@ts-ignore
-				ninjas.map(ninja => (
-					<div key={ninja.id}>
-						<a>{ninja.name}</a>
-					</div>
-				))
-			}
-		</div>
-	);
+		<li  onClick={() => findPokemon(url)}>
+			<img src={url} alt={`${name} cover`} />
+			<span> {name}</span>
+			<div>
+			</div>
+		</li>
+	)
 };
 
-export default Home;
+export default page;
