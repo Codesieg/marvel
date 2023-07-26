@@ -1,32 +1,46 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 
-const page = () => {
-	const [pokemon, setPokemon] = useState([]);
+async function fetchPokemonData() {
+	const apiUrl = 'https://pokebuildapi.fr/api/v1/pokemon';
 
-	function findPokemon(url) {
-		fetch(url)
-		.then(response => response.json())
-		.then(pokemon => setPokemon(pokemon))
-		.catch(error => console.log(error));
+	try {
+		const response = await fetch(apiUrl);
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error fetching data:', error);
+		return null;
 	}
-	
-	useEffect(() => {
-		findPokemon();
-	}, []);
-	console.log(pokemon);
+}
 
-	function handleClick(plantName) {
-		alert(`Vous voulez acheter 1 ${plantName}? Très bon choix 🌱✨`)
+export default function Page() {
+	const [pokemonData, setPokemonData] = useState([]);
+
+	useEffect(() => {
+		async function fetchData() {
+			const data = await fetchPokemonData();
+			setPokemonData(data);
+		}
+		fetchData();
+	}, []);
+
+	// Afficher les données une fois qu'elles sont disponibles
+	if (!pokemonData) {
+		return <div>Loading...</div>;
 	}
 
 	return (
-		<li  onClick={() => findPokemon(url)}>
-			<img src={url} alt={`${name} cover`} />
-			<span> {name}</span>
-			<div>
-			</div>
-		</li>
-	)
-};
-
-export default page;
+		<div>
+			<h1>Liste des Pokémons</h1>
+			<ul>
+				{pokemonData.map(pokemon => (
+					<div key="pokemon.id">
+						<li>{pokemon.name}</li>
+						<img src={pokemon.image} />
+					</div>
+				))}
+			</ul>
+		</div>
+	);
+}
