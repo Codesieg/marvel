@@ -1,10 +1,13 @@
-import React from 'react';
+'use client';
 
-const page = () => {
-	const [pokemon, setPokemon] = useState([]);
+import React, { useEffect, useState } from 'react';
+import Pokemons from './Pokemons';
 
-	function findPokemon(url) {
-		fetch(url)
+const Page = () => {
+	const [pokemons, setPokemon] = useState([]);
+
+	function findPokemon() {
+		fetch('https://pokebuildapi.fr/api/v1/pokemon')
 		.then(response => response.json())
 		.then(pokemon => setPokemon(pokemon))
 		.catch(error => console.log(error));
@@ -13,20 +16,20 @@ const page = () => {
 	useEffect(() => {
 		findPokemon();
 	}, []);
-	console.log(pokemon);
-
-	function handleClick(plantName) {
-		alert(`Vous voulez acheter 1 ${plantName}? Très bon choix 🌱✨`)
-	}
+	console.log(pokemons);
 
 	return (
-		<li  onClick={() => findPokemon(url)}>
-			<img src={url} alt={`${name} cover`} />
-			<span> {name}</span>
-			<div>
-			</div>
-		</li>
+		<div className="flex flex-row">
+			{pokemons.map(({id, name, image, apiTypes}) => (
+				<Pokemons
+					key={id}
+					name={name}
+					image={image}
+					apiTypes={apiTypes}
+				/>
+			))}
+		</div>
 	)
 };
 
-export default page;
+export default Page;
