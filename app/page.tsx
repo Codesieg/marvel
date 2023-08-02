@@ -19,7 +19,7 @@ const Page = () => {
 	console.log(pokemons);
 
 	return (
-		<div className="flex flex-row">
+		<div className="flex flex-row flex-wrap">
 			{pokemons.map(({id, name, image, apiTypes}) => (
 				<Pokemons
 					key={id}
