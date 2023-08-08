@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Pokemons from './Pokemons';
-
+import Pokemon from './pokemon/page';
+import Menu from "./Menu";
 const Page = () => {
 	const [pokemons, setPokemon] = useState([]);
 
@@ -19,16 +19,20 @@ const Page = () => {
 	console.log(pokemons);
 
 	return (
-		<div className="flex flex-row flex-wrap">
-			{pokemons.map(({id, name, image, apiTypes}) => (
-				<Pokemons
-					key={id}
-					name={name}
-					image={image}
-					apiTypes={apiTypes}
-				/>
-			))}
-		</div>
+		<>
+			<Menu />
+			<div className="flex flex-row flex-wrap w-11/12 mx-auto">
+				{pokemons.map(({pokedexId, name, image, apiTypes}) => (
+					<Pokemon
+						key={pokedexId}
+						pokedexId={pokedexId}
+						name={name}
+						image={image}
+						apiTypes={apiTypes}
+					/>
+				))}
+			</div>
+		</>
 	)
 };
 
