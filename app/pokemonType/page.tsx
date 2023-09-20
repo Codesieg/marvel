@@ -1,7 +1,6 @@
 import React from 'react';
 
-const PokemonType = ({types}) => {
-    console.log(types);
+const Page = ({types}) => {
     return (
         <div className="flex mx-auto">
             {types.map(({name, image}) => (
@@ -15,4 +14,4 @@ const PokemonType = ({types}) => {
     )
 };
 
-export default PokemonType;
+export default Page;

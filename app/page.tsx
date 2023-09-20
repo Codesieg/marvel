@@ -32,11 +32,9 @@ const Page = () => {
 	console.log(pokemons);
 
 	if (loading) {
-		// <StrictMode>
 			return  (
 				<Loader loading = {loading} />
 			)
-		// </StrictMode>
 	}
 	return (
 		<StrictMode>
